@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>
+      Scan the QR code below with Google Authenticator or any other compatible
+      app
+    </h1>
+    <img src="QR_CODE_DATA_URL" alt="Scan with Google Authenticator" />
+
+    <h2>Enter the code from the app</h2>
+    <input type="text" id="token" />
+    <button id="submit">Verify</button>
+    <p id="message"></p>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.7/axios.min.js"
+      integrity="sha512-DdX/YwF5e41Ok+AI81HI8f5/5UsoxCVT9GKYZRIzpLxb8Twz4ZwPPX+jQMwMhNQ9b5+zDEefc+dcvQoPWGNZ3g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+
+    <script>
+      const submit = document.getElementById("submit");
+      const token = document.getElementById("token");
+      const message = document.getElementById("message");
+
+      const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+      submit.addEventListener("click", async () => {
+        message.textContent = "";
+
+        await wait(250);
+        try {
+          const response = await axios.get(`/verify?token=${token.value}`);
+          const verified = response.data.verified;
+
+          if (verified) {
+            message.style.color = "green";
+            message.textContent = "Token is valid";
+          } else {
+            message.style.color = "red";
+            message.textContent = "Token is invalid";
+          }
+        } catch (error) {
+          message.textContent = error.response.data.message;
+        }
+      });
+    </script>
+  </body>
+</html>
