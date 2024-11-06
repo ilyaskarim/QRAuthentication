@@ -1,4 +1,4 @@
-const readme = `# QR Code Authentication App
+# QR Code Authentication App
 
 This is a simple web application that allows users to scan a QR code using an authenticator app (such as Google Authenticator) and verify authentication by entering the generated code.
 
@@ -94,4 +94,4 @@ For any questions or issues, please feel free to reach out or create an issue in
 
 ---
 
-Enjoy building with this QR Code Authentication App!`
+Enjoy building with this QR Code Authentication App!
